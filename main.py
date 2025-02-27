@@ -186,7 +186,7 @@ def _get_report_modal_blocks() -> list[dict]:
         },
         "label": {
             "type": "plain_text",
-            "text": "Label",
+            "text": " ",
             "emoji": True
         }
     }
