@@ -86,12 +86,11 @@ def load_settings(filename='settings.json') -> dict:
     except FileNotFoundError:
         logger.info(f'Settings file not found. Creating new settings file at {data_path / filename}')
         save_settings(default_settings(), filename)
-        input('Press Enter to continue...')
         return {}
 
 
 settings = load_settings()
-cd
+
 # Initialize the Slack app
 # SLACK_BOT_TOKEN set with environment variable
 slack = App()
