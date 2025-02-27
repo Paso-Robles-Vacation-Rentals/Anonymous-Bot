@@ -19,7 +19,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/gpl-3.0-stand
 import json
 import logging
 from pathlib import Path
-from logging.handlers import TimedRotatingFileHandler
 
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
@@ -29,7 +28,7 @@ from slack_sdk.errors import SlackApiError
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-# Format log messages
+# Format logger messages
 formatter = logging.Formatter('[%(asctime)s][%(levelname)s][%(filename)s]: %(message)s',
                               datefmt='%Y-%m-%d %H:%M:%S')
 
@@ -39,28 +38,14 @@ ch.setLevel(logging.INFO)
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
+logger.info("""
+Anonymous Bot Copyright (C) 2025  Paso Robles Vacation Rentals
+This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions. For details https://www.gnu.org/licenses/agpl-3.0-standalone.html
+""")
 
 data_path = Path(__file__).resolve().parent / 'data'
 if not data_path.exists():
     data_path.mkdir()
-
-# Create directory for logs if it doesn't exist
-log_path = data_path / 'logs'
-if not log_path.exists():
-    log_path.mkdir()
-
-# Create a logging handler for file output
-fh = TimedRotatingFileHandler(log_path / 'latest.log', when='midnight', interval=1, backupCount=30)
-fh.setLevel(logging.INFO)
-fh.setFormatter(formatter)
-fh.suffix = "%Y%m%d.log"  # Custom suffix for rotated log files
-fh.extMatch = r'^\d{8}\.log$'  # Regular expression pattern for matching rotated log files
-logger.addHandler(fh)
-
-logger.info("""
-Anonymous Bot Copyright (C) 2025  Paso Robles Vacation Rentals
-This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions. For details https://www.gnu.org/licenses/gpl-3.0-standalone.html
-""")
 
 
 def save_settings(settings: dict, filename='settings.json'):
