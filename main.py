@@ -206,7 +206,6 @@ def get_report_modal() -> dict:
 
 
 def get_report_message_blocks(title: str, message: str) -> list[dict]:
-    elements = []
     title = {
         "type": "rich_text_section",
         "elements": [
@@ -273,7 +272,7 @@ def submit_report(ack, body, client, view):
     recipient = view['state']['values']['send_to']['send_to_select']['selected_option']['value']
     message = view['state']['values']['report_text']['plain_text_input-action']['value']
     try:
-        report_blocks = get_report_message_blocks("New Report Recieved", message)
+        report_blocks = get_report_message_blocks("New Report Received", message)
         client.chat_postMessage(channel=recipient, text=message, blocks=report_blocks)
         ack()
         confirmation_blocks = get_report_message_blocks("Report Sent", message)
